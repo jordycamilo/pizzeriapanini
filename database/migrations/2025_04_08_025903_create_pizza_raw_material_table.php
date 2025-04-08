@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raw_material', function (Blueprint $table) {
+        Schema::create('pizza_raw_material', function (Blueprint $table) {
             $table->id();
         $table->foreignId('pizza_id')->references('id')->on('pizzas')->onDelete('cascade');
        
