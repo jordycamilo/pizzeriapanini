@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
     
 });
 
-
-Route::resource('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+Route::resource('orders', OrderController::class);
+Route::resource('pizzas', PizzaController::class);

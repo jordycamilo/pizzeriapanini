@@ -20,11 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->enum('role',['cliente','empleado','administrador']);
-           /* $table->unsignedBigInteger('clients_id');
-            $table->foreign('clients_id',)->references('id')->on('clients')->onDelete('cascade');
-            $table->unsignedBigInteger('employees_id');
-            $table->foreign('employees_id',)->references('id')->on('employees')->onDelete('cascade');
-*/
+           
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -43,9 +39,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('users');
