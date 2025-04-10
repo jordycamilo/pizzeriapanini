@@ -6,26 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
-        Schema::create('pizza_size', function (Blueprint $table) {
+        Schema::create('pizza_ingredients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('pizza_id',)->references('id')->on('pizzas')->onDelete('cascade');
-            $table->enum('size',['pequeña','mediana','grande']);
-            $table->float('price');
-            
-        });
+            $table->foreignId('ingredient_id',)->references('id')->on('ingredients')->onDelete('cascade');
+        
+            });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
-        Schema::dropIfExists('pizza_size');
+        Schema::dropIfExists('pizza_ingredients');
     }
 };
