@@ -31,7 +31,7 @@ class Order extends Model
         return $this->belongsTo(Client::class);
     }
 
-    // Relación con ingredientes usando la tabla pivot pizza_ingredients
+    
     public function ingredients()
 {
     return $this->belongsToMany(Ingredient::class, 'order_ingredient')->withTimestamps();

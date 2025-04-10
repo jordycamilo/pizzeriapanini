@@ -19,17 +19,37 @@ class OrderController extends Controller
   
     public function index(Request $request): View
     {
-        $orders = Order::with(['pizza', 'size', 'client', 'ingredients'])->get();
+        $user = auth()->user();
+
+        
+        if ($user->role === 'cliente') {
+            $client = Client::where('user_id', $user->id)->first();
+    
+            $orders = $client
+                ? Order::with(['pizza', 'pizzaSize', 'ingredients', 'client.user'])
+                    ->where('client_id', $client->id)
+                    ->get()
+                : collect(); 
+    
+        } else {
+            
+            $orders = Order::with(['pizza', 'pizzaSize', 'ingredients', 'client.user'])->get();
+        }
+    
         return view('orders.index', compact('orders'));
     }
 
     
     public function create(): View
     {
+        if (auth()->user()->role !== 'cliente') {
+            return redirect()->route('orders.index')->with('error', 'Solo los clientes pueden crear pedidos.');
+        }
+    
         $pizzas = Pizza::all();
         $sizes = PizzaSize::all();
         $ingredients = Ingredient::all();
-
+    
         return view('orders.create', compact('pizzas', 'sizes', 'ingredients'));
     }
 
@@ -40,20 +60,28 @@ class OrderController extends Controller
             'pizza_id' => 'required|exists:pizzas,id',
             'pizza_size_id' => 'required|exists:pizza_sizes,id',
             'order_type' => 'required|in:para_llevar,en_local',
+            'ingredients' => 'array',
+            'ingredients.*' => 'exists:ingredients,id',
         ]);
-
+    
+       $client = Client::where('user_id', auth()->id())->first();
+    
+        if (!$client) {
+            return back()->with('error', 'Solo los clientes pueden hacer pedidos');
+        }
+    
         $order = Order::create([
             'pizza_id' => $request->pizza_id,
             'pizza_size_id' => $request->pizza_size_id,
             'order_type' => $request->order_type,
-            'client_id' => auth()->id() ?? 1, // usar auth o setear fijo si aún no hay login
+            'client_id' => $client->id,
         ]);
-
+    
         if ($request->has('ingredients')) {
             $order->ingredients()->attach($request->ingredients);
         }
-
-        return redirect()->route('orders.index')->with('success', 'Pedido creado con éxito.');
+    
+        return redirect()->route('orders.index')->with('success', 'Pedido creado con éxito.');      
     }
 
     
@@ -84,7 +112,7 @@ class OrderController extends Controller
             'order_type' => $request->order_type,
         ]);
 
-        // sincroniza ingredientes
+       
         $order->ingredients()->sync($request->ingredients ?? []);
 
         return redirect()->route('orders.index')->with('success', 'Pedido actualizado.');
