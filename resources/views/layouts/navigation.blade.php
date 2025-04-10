@@ -21,6 +21,16 @@
                         {{ __('Sucursales') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('ingredients.index')" :active="request()->routeIs('ingredients.index')">
+                        {{ __('Ingredientes') }}
+                    </x-nav-link>
+                </div>
             </div>
          
 
