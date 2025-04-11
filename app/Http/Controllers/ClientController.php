@@ -51,6 +51,12 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')->with('success', 'Cliente actualizado.');
     }
+    public function show($id): \Illuminate\Contracts\View\View
+    {
+        $client = client::find($id);
+
+        return view('clients.show', compact('client'));
+    }
 
     public function destroy(Client $client)
     {
