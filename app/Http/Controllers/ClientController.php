@@ -10,11 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-        $clients = Client::with('user')->paginate(10);
-=======
         $clients = Client::with('user')->get();
->>>>>>> 0396c0cfe425a28e93d2a6e453eac07214264007
         return view('clients.index', compact('clients'));
     }
 
@@ -55,15 +51,6 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')->with('success', 'Cliente actualizado.');
     }
-<<<<<<< HEAD
-    public function show($id): \Illuminate\Contracts\View\View
-    {
-        $client = client::find($id);
-
-        return view('clients.show', compact('client'));
-    }
-=======
->>>>>>> 0396c0cfe425a28e93d2a6e453eac07214264007
 
     public function destroy(Client $client)
     {
