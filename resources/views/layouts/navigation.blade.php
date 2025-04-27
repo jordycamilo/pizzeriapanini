@@ -31,6 +31,12 @@
                         {{ __('Ingredientes') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('pizzas.index')" :active="request()->routeIs('pizzas.index')">
+                        {{ __('Pizzas') }}
+                    </x-nav-link>
+                </div>
+    
             </div>
          
 
