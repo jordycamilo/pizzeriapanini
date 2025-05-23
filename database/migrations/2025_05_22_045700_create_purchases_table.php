@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('pizza_raw_material', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pizza_id')->references('id')->on('pizzas')->onDelete('cascade');
+            $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
             $table->foreignId('raw_material_id')->constrained('raw_materials')->onDelete('cascade');
-            $table->decimal('quantity', 8, 2); 
+            $table->decimal('quantity', 8, 2);
+            $table->decimal('purchase_price', 8, 2);
+            $table->timestamp('purchase_date');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('pizza_raw_material');
+        Schema::dropIfExists('purchases');
     }
 };

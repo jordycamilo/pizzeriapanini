@@ -10,30 +10,55 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pizza_id',
-        'pizza_size_id',
         'client_id',
-        'order_type',
+        'branch_id',
+        'delivery_person_id',
+        'total_price',
+        'status',
+        'delivery_type',
     ];
 
-    public function pizza()
+    public function pizzas()
     {
-        return $this->belongsTo(Pizza::class);
+        return $this->belongsToMany(PizzaSize::class, 'order_pizza')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
+
 
     public function size()
     {
         return $this->belongsTo(PizzaSize::class, 'pizza_size_id');
     }
-
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+    public function pizzaSizes()
+    {
+        return $this->belongsToMany(PizzaSize::class, 'order_pizza')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    
+
     public function ingredients()
-{
-    return $this->belongsToMany(Ingredient::class, 'order_ingredient')->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Ingredient::class, 'order_ingredient')->withTimestamps();
+    }
+    public function extraIngredients()
+    {
+        return $this->belongsToMany(ExtraIngredient::class, 'order_extra_ingredient')
+            ->withTimestamps();
+    }
+
+    public function deliveryPerson()
+    {
+        return $this->belongsTo(Employee::class, 'delivery_person_id');
+    }
+
 }
