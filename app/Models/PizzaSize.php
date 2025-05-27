@@ -15,4 +15,11 @@ class PizzaSize extends Model
     {
         return $this->belongsTo(Pizza::class);
     }
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_pizza')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+
 }
