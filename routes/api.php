@@ -1,14 +1,21 @@
 <?php
 
 use App\Http\Controllers\api\SucursaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+});
 
-Route::get('/sucursales',[SucursaleController::class,'index']);
-Route::get('/sucursales/{id}',[SucursaleController::class,'show']);
-Route::post('/sucursales',[SucursaleController::class,'store']);
-Route::put('/sucursales/{id}',[SucursaleController::class,'update']);
+Route::get('/sucursales',[SucursaleController::class,'index'])->name('sucursales');
+Route::get('/sucursales/{id}',[SucursaleController::class,'show'])->name('sucursales.show');
+Route::post('/sucursales',[SucursaleController::class,'store'])->name('sucursales');
+Route::put('/sucursales/{id}',[SucursaleController::class,'update'])->name('sucursales.update');
+Route::delete('/sucursales/{id}',[SucursaleController::class,'destroy'])->name('sucursales.destroy');
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+
+//Route::resource('sucursales', SucursaleController::class);
+//Route::resource('users', UserController::class);

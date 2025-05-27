@@ -23,6 +23,7 @@ class Sucursale extends Model
 {
     
     protected $perPage = 20;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +38,7 @@ class Sucursale extends Model
      */
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
+    return $this->belongsTo(User::class);
     }
     
 }
