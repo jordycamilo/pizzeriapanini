@@ -10,7 +10,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employee = DB::table('employees') // corregido: 'employee' → 'employees'
+        $employee = DB::table('employees') 
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->select('employees.*', 'users.id')    
             ->get();
@@ -28,12 +28,12 @@ class EmployeeController extends Controller
         $employee->hire_date = $request->hire_date;
         $employee->save();
 
-        return json_encode(['employees' => $employee]); // corregido: $employees → $employee
+        return json_encode(['employees' => $employee]); 
     }
 
     public function show(string $id)
     {
-        $employee = Employee::find($id); // corregido: falta el use del modelo arriba
+        $employee = Employee::find($id); 
 
         $users = DB::table('users')
             ->orderBy('user_id')
@@ -44,7 +44,7 @@ class EmployeeController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $employee = Employee::find($id); // corregido: Employees → Employee
+        $employee = Employee::find($id); 
         $employee->employee_id = $request->employee_id;
         $employee->user_id = $request->user_id;
         $employee->save();
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $employee->delete();
 
-        $employees = DB::table('employees') // corregido: se definió correctamente la variable $employees
+        $employees = DB::table('employees') 
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->select('employees.*', 'users.name as user_name')    
             ->get();

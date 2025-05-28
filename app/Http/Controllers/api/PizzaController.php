@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Pizza;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PizzaController extends Controller
 {
@@ -12,7 +13,8 @@ class PizzaController extends Controller
      */
     public function index()
     {
-        //
+        $pizzas = Pizza::all();
+        return response()->json(['pizzas' => $pizzas]);
     }
 
     /**
@@ -20,7 +22,13 @@ class PizzaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $pizza = Pizza::create($validated);
+
+        return response()->json(['pizza' => $pizza], 201);
     }
 
     /**
@@ -28,7 +36,13 @@ class PizzaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pizza = Pizza::find($id);
+
+        if (!$pizza) {
+            return response()->json(['message' => 'Pizza not found'], 404);
+        }
+
+        return response()->json(['pizza' => $pizza]);
     }
 
     /**
@@ -36,7 +50,19 @@ class PizzaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pizza = Pizza::find($id);
+
+        if (!$pizza) {
+            return response()->json(['message' => 'Pizza not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+        ]);
+
+        $pizza->update($validated);
+
+        return response()->json(['pizza' => $pizza]);
     }
 
     /**
@@ -44,6 +70,14 @@ class PizzaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pizza = Pizza::find($id);
+
+        if (!$pizza) {
+            return response()->json(['message' => 'Pizza not found'], 404);
+        }
+
+        $pizza->delete();
+
+        return response()->json(['message' => 'Deleted successfully', 'success' => true]);
     }
 }

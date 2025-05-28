@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\Ingredient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $ingredients = Ingredient::all();
+        return response()->json(['ingredients' => $ingredients]);
     }
 
     /**
@@ -20,7 +22,12 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $ingredient = Ingredient::create($validated);
+        return response()->json(['ingredient' => $ingredient], 201);
     }
 
     /**
@@ -28,7 +35,13 @@ class IngredientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+
+        if (!$ingredient) {
+            return response()->json(['message' => 'Ingredient not found'], 404);
+        }
+
+        return response()->json(['ingredient' => $ingredient]);
     }
 
     /**
@@ -36,7 +49,18 @@ class IngredientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+
+        if (!$ingredient) {
+            return response()->json(['message' => 'Ingredient not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+        ]);
+
+        $ingredient->update($validated);
+        return response()->json(['ingredient' => $ingredient]);
     }
 
     /**
@@ -44,6 +68,13 @@ class IngredientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+
+        if (!$ingredient) {
+            return response()->json(['message' => 'Ingredient not found'], 404);
+        }
+
+        $ingredient->delete();
+        return response()->json(['message' => 'Deleted successfully', 'success' => true]);
     }
 }

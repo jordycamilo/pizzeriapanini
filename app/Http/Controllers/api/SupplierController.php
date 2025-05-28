@@ -2,48 +2,80 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\Supplier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar todos los suppliers
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::all();
+        return response()->json(['suppliers' => $suppliers]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear un nuevo supplier
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'contact_info' => 'nullable|string|max:255',
+        ]);
+
+        $supplier = Supplier::create($validated);
+
+        return response()->json(['supplier' => $supplier], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar un supplier específico
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if (!$supplier) {
+            return response()->json(['message' => 'Supplier not found'], 404);
+        }
+        return response()->json(['supplier' => $supplier]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar un supplier específico
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if (!$supplier) {
+            return response()->json(['message' => 'Supplier not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'contact_info' => 'nullable|string|max:255',
+        ]);
+
+        $supplier->update($validated);
+
+        return response()->json(['supplier' => $supplier]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un supplier específico
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if (!$supplier) {
+            return response()->json(['message' => 'Supplier not found'], 404);
+        }
+
+        $supplier->delete();
+
+        return response()->json(['message' => 'Supplier deleted successfully', 'success' => true]);
     }
 }
