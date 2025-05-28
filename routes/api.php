@@ -17,12 +17,12 @@ Route::put('/sucursales/{id}',[SucursaleController::class,'update'])->name('sucu
 Route::delete('/sucursales/{id}',[SucursaleController::class,'destroy'])->name('sucursales.destroy');
 
 //Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::resource('clients', ClientController::class);
 
-Route::get('/clients', [ClientController::class, 'index'])->name('clients');
-Route::get('/clients/{id}',[ClientController::class,'show'])->name('clients.show');
-Route::post('/clients',[ClientController::class,'store'])->name('clients');
-Route::put('/clients/{id}',[ClientController::class,'update'])->name('clients.update');
-Route::delete('/clients/{id}',[ClientController::class,'destroy'])->name('clients.destroy');
+//Route::get('/clients/{id}',[ClientController::class,'show'])->name('clients.show');
+//Route::post('/clients',[ClientController::class,'store'])->name('clients');
+//Route::put('/clients/{id}',[ClientController::class,'update'])->name('clients.update');
+//Route::delete('/clients/{id}',[ClientController::class,'destroy'])->name('clients.destroy');
 
 
 //Route::resource('clients', SucursaleController::class);
