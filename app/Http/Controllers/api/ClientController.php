@@ -69,7 +69,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client->delete();
         $clients= DB ::table('clients')
-            ->join('users', 'clients.user_id', '=', 'users.user_id')
+            ->join('users', 'clients.user_id', '=', 'users.id')
             ->select('clients.*', 'users.name as user_name')    
             ->get();
             return json_encode(['clients' => $clients, 'success' => true]); 
