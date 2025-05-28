@@ -19,4 +19,15 @@ Route::delete('/sucursales/{id}',[SucursaleController::class,'destroy'])->name('
 
 Route::resource('clients', ClientController::class);
 Route::resource('employees', EmployeeController::class);
+Route::resource('extra_ingredients', Extra_ingredientController::class);
+Route::resource('ingredients', IngredientController::class);
+Route::resource('order_ongredients', Order_ongredientController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('pizza_ingredients', Pizza_ingredientController::class);
+Route::resource('raw_materials', Raw_materialController::class);
+Route::resource('pizza_sizes', Pizza_sizeController::class);
+Route::resource('pizzas', PizzaController::class);
+Route::resource('suppliers', SupplierController::class);
+Route::resource('users', UserController::class);
+
 
