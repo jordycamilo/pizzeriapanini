@@ -17,7 +17,7 @@ class UserController extends Controller
         $users =DB::table('users')
         ->orderBy('name')
         ->get();
-        return json_encode(['users'=>$users]); //lo muestra lineal
+        return response()->json(['users' => $users]);
 
         
     }

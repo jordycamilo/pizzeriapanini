@@ -14,7 +14,14 @@ class SucursaleController extends Controller
      */
     public function index()
     {
-        $sucursales = Sucursale::with('user')->get();
+        /*$sucursales = Sucursale::with('user')->get();
+        return response()->json(['sucursales' => $sucursales]);*/
+
+        $sucursales = DB::table('sucursales')
+            ->join('users', 'sucursales.user_id', '=', 'users.id')
+            ->select('sucursales.*', "users.name")
+            ->get();
+        //return json_encode(['sucursales'=>$sucursales]);
         return response()->json(['sucursales' => $sucursales]);
     }
 
@@ -26,19 +33,13 @@ class SucursaleController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
-            'telefono' => 'required|string|max:20',
-            'user_id' => 'required|exists:users,id', 
-        ]);
-        /*$sucursale = new Sucursale();
+
+        $sucursale = new Sucursale();
         $sucursale->nombre = $request->nombre;
         $sucursale->direccion = $request->direccion;
         $sucursale->telefono = $request->telefono;
         $sucursale->user_id = $request->user_id;
-        $sucursale->save();*/
-        $sucursale = Sucursale::create($validated);
+        $sucursale->save();
 
         return json_encode(['sucursale' => $sucursale]);        //$sucursale = Sucursale::create($request->validated());
         //return response()->json(['sucursale' => $sucursale], 201);
@@ -52,11 +53,17 @@ class SucursaleController extends Controller
      */
     public function show(string $id)
     {
-        $sucursale = Sucursale::with('user')->find($id);
+        /*$sucursale = Sucursale::with('user')->find($id);
         if (!$sucursale) {
         return response()->json(['message' => 'Sucursal no encontrada'], 404);
     }
     
+        $users = DB::table('users')
+            ->orderBy('name')
+            ->get();
+        return json_encode(['sucursale' => $sucursale, 'users' => $users]);*/
+
+        $sucursale = Sucursale::find($id);
         $users = DB::table('users')
             ->orderBy('name')
             ->get();
