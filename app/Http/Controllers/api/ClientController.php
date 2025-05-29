@@ -24,6 +24,8 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -32,7 +34,7 @@ class ClientController extends Controller
         $client->address = $request->address;   
         $client->phone = $request->phone;
         $client->save();
-        return json_encode(['clients'=> $client]);
+        return json_encode(['client'=> $client]);
     }
 
     /**
