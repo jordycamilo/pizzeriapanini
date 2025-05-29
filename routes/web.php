@@ -19,6 +19,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('orders', OrderController::class);
+Route::resource('users', UserController::class);
+Route::resource('clients', ClientController::class);
+Route::resource('pizzas', PizzaController::class);
+Route::resource('pizza_sizes', PizzaSizeController::class);
+Route::resource('ingredients', IngredientController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('sucursales', SucursaleController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,15 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 Route::middleware(['auth'])->group(function () {
-    Route::resource('orders', OrderController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('clients', ClientController::class);
-    Route::resource('pizzas', PizzaController::class);
-    Route::resource('pizza_sizes', PizzaSizeController::class);
-    Route::resource('ingredients', IngredientController::class);
-    Route::resource('orders', OrderController::class);
-    Route::resource('sucursales', SucursaleController::class);
+
 });
 
