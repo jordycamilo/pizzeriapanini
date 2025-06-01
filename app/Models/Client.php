@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['address', 'phone', 'user_id'];
-
+    protected $table = "clients";
+    protected $primaryKey = "id";
+    public $timestamps = false;
     public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
+{
+    return $this->belongsTo(User::class);
+}
 }
