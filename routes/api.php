@@ -8,7 +8,6 @@ use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\EmployeeController;
 use App\Http\Controllers\api\ExtraIngredientController;
 use App\Http\Controllers\api\IngredientController;
-use App\Http\Controllers\api\Order_ongredientController;
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\PizzaIngredientController; 
 use App\Http\Controllers\api\RawMaterialController;
@@ -27,7 +26,7 @@ Route::resource('clients', ClientController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('extra-ingredients', ExtraIngredientController::class);
 Route::resource('ingredients', IngredientController::class);
-Route::apiResource('order-ingredients', OrderIngredientController::class)->only(['index', 'store', 'show', 'destroy']);
+Route::resource('order-ingredients', OrderIngredientController::class)->only(['index', 'store', 'show', 'destroy']);
 
 Route::resource('orders', OrderController::class);
 Route::resource('pizza-ingredients', PizzaIngredientController::class);

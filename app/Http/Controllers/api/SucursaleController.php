@@ -67,7 +67,7 @@ class SucursaleController extends Controller
         $users = DB::table('users')
             ->orderBy('name')
             ->get();
-        return json_encode(['sucursale' => $sucursale, 'users' => $users]);
+        return response()->json(['sucursale' => $sucursale, 'users' => $users]);
     }
 
     /**
@@ -85,7 +85,7 @@ class SucursaleController extends Controller
         $sucursale->user_id = $request->user_id;
         $sucursale->save();
 
-        return json_encode(['sucursale' => $sucursale]);
+        return response()->json(['sucursale' => $sucursale]);
     }
 
 
@@ -102,7 +102,7 @@ class SucursaleController extends Controller
             ->join('users', 'sucursales.user_id', '=', 'users.id')
             ->select('sucursales.*', "users.name as user_name")
             ->get();
-        return json_encode(['sucursales' => $sucursales, 'success' => true]); //lo muestra lineal
+        return response()->json(['sucursales' => $sucursales, 'success' => true]); //lo muestra lineal
 
     }
 }

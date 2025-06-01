@@ -38,8 +38,6 @@
                 </div>
     
             </div>
-         
-
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -84,7 +82,6 @@
             </div>
         </div>
     </div>
-
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -92,9 +89,6 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-
-        
-
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

@@ -15,10 +15,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class);
     }
-    /*protected $fillable = ['name', 'email', 'password', 'role'];
+    protected $fillable = ['name', 'email', 'password', 'role'];
 
     
-    public function employee()
+    /*public function employee()
     {
         return $this->hasOne(Employee::class);
     }*/

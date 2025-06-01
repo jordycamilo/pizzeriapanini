@@ -11,4 +11,8 @@ class Client extends Model
     protected $table = "clients";
     protected $primaryKey = "id";
     public $timestamps = false;
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }
